@@ -41,7 +41,7 @@ def list_all_cars(current_user_token):
 @api.route('/cars/<id>', methods = ['GET'])
 @token_required
 def get_single_car(current_user_token,id):
-    car = car.query.get(id) 
+    car = Car.query.get(id) 
     response = car_schema.dump(car)
     return response
 
@@ -50,7 +50,7 @@ def get_single_car(current_user_token,id):
 @api.route('/cars/<id>', methods = ['POST','PUT'])
 @token_required
 def update_car_info(current_user_token,id):
-    car = car.query.get(id) 
+    car = Car.query.get(id) 
     car.make = request.json['make']
     car.model = request.json['model']
     car.year = request.json['year']
