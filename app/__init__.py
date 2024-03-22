@@ -1,8 +1,7 @@
 from flask import Flask
-from config import Config
-from .api.routes import api
-from .site.routes import site
-from .authentication.routes import auth
+from Config import config
+from app.authentication.routes import auth
+from app.api.routes import graf
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -13,12 +12,11 @@ from helpers import JSONEncoder
 app = Flask(__name__)
 CORS(app)
 
-app.register_blueprint(site)
 app.register_blueprint(auth)
-app.register_blueprint(api)
+app.register_blueprint(graf)
 
 app.json_encoder = JSONEncoder
-app.config.from_object(Config)
+app.config.from_object(config)
 root_db.init_app(app)
 login_manager.init_app(app)
 ma.init_app(app)

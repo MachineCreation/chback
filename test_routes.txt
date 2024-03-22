@@ -1,0 +1,45 @@
+x-access-token  Bearer ${token}
+
+JSON format
+
+
+--------register user
+
+        http://127.0.0.1:5000/register
+{
+	"email": "",
+	"password": "",
+	"user_name": ""
+}
+
+--------login user
+
+        http://127.0.0.1:5000/login
+{
+	"user_name": "",
+	"password": ""
+}
+
+--------@me       // to check logged user status/info
+
+        http://127.0.0.1:5000/@me
+
+
+--------change graph values           // if values == "" (empty string) the value of the origional will not change
+
+        http://127.0.0.1:5000/create
+
+{
+    "red": "",
+    "blue": "",
+    "green": "",
+    "yellow": ""
+}
+
+--------set API key
+
+        http://127.0.0.1:5000/API_key
+
+{
+	"API_key": ""
+}

@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import uuid 
+from uuid import uuid4
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -20,70 +20,23 @@ def load_user(user_id):
 
                                                                                 # create class for generating user information and storing it in our DB(using SQLAlchemy)
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.String, primary_key=True)
-    first_name = db.Column(db.String(150), nullable = True, default = '')
-    last_name = db.Column(db.String(150), nullable = True, default = '')
-    email = db.Column(db.String(150), nullable = False)
-    password = db.Column(db.String, nullable = True, default = '')
-    g_auth_verify = db.Column(db.Boolean, default = False)
-    token = db.Column(db.String, default = '', unique = True )
-    date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
-
-    def __init__(self, email, first_name='', last_name='', password='', token='', g_auth_verify=False):
-        self.id = self.set_id()
-        self.first_name = first_name
-        self.last_name = last_name
-        self.password = self.set_password(password)
-        self.email = email
-        self.token = self.set_token(24)
-        self.g_auth_verify = g_auth_verify
-
-    def set_token(self, length):
+def set_token(length):
         return secrets.token_hex(length)
 
-    def set_id(self):
-        return str(uuid.uuid4())
-    
-    def set_password(self, password):
-        self.pw_hash = generate_password_hash(password)
-        return self.pw_hash
+def get_uuid():
+    return uuid4().hex
 
-    def __repr__(self):
-        return f'User {self.email} has added to the database'
-    
-                                                                                # create a class to take in contact info and store it to the phonebook for later Queries DB
-    
-class Car(db.Model):
-    id = db.Column(db.String, primary_key = True)
-    make = db.Column(db.String(150), nullable = False)
-    model = db.Column(db.String(200))
-    year = db.Column(db.String(4))
-    mileage = db.Column(db.String(7))
-    when_purchased = db.Column(db.String(10))
-    user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
-
-    def __init__(self, make, model, year, mileage, when_purchased, user_token, id = ''):
-        self.id = self.set_id()
-        self.make = make
-        self.model = model
-        self.year = year
-        self.mileage = mileage
-        self.when_purchased = when_purchased
-        self.user_token = user_token
-
-
-    def __repr__(self):
-        return f'The following contact has been added to the phonebook: {self.make}, {self.model}, {self.year}'
-
-    def set_id(self):
-        return (secrets.token_urlsafe())
-    
-                                                                                # not quite sure what this is for yet. I'm not familear with Marshmallow
-
-class CarSchema(ma.Schema):
-    class Meta:
-        fields = ['id', 'make','model','year', 'mileage','when_purchased']
-
-car_schema = CarSchema()
-cars_schema = CarSchema(many=True)
+                                                                # user signup
+                                                                
+class User(db.Model, UserMixin):
+    __tablename__ = 'Users'
+    id = db.Column(db.String(32), primary_key = True, unique = True, default = get_uuid)
+    email = db.Column(db.String(345), unique = True, nullable = False)
+    password = db.Column(db.String(150), nullable = False)
+    user_name = db.Column(db.String(32), nullable = False, unique = True)
+    APIkey = db.Column(db.String(100), nullable = True, default = '')
+    red = db.Column(db.String(50), nullable = True, default = 'BTC')
+    blue = db.Column(db.String(50), nullable = True, default = 'LTC')
+    green = db.Column(db.String(50), nullable = True, default = 'ETH')
+    yellow = db.Column(db.String(50), nullable = True, default = 'XTZ')
+    token =db.Column(db.String(25), nullable = True, unique = True, default = set_token(24))

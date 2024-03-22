@@ -1,73 +1,63 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Flask, request, Blueprint, jsonify, session
+from models import db, User
 from helpers import token_required
-from models import db, User, Car, car_schema, cars_schema
 
-api = Blueprint('api',__name__, url_prefix='/api')
+from flask import current_app as app
 
 
-                                                                                #post contact test route
+graf = Blueprint('graf', __name__,)
 
-@api.route('/new_car', methods = ['POST'])
+                                                                # set graph route
+
+@graf.route("/create", methods = ["PUT"])
 @token_required
-def new_car(current_user_token):
-    make = request.json['make']
-    model = request.json['model']
-    year = request.json['year']
-    mileage = request.json['mileage']
-    when_purchased = request.json['when_purchased']
+def set_graph(current_user_token):
 
-    print(f'BIG TESTER: {current_user_token.token}')
+    token = current_user_token.token
+    red = request.json["red"]
+    blue = request.json["blue"]
+    green = request.json["green"]
+    yellow = request.json["yellow"]
+    
+    user = User.query.filter_by(token = token).first()
 
-    car = Car(make, model, year, mileage,when_purchased, user_token = current_user_token.token)
+    if red != "":
+        user.red = red
 
-    db.session.add(car)
+    if blue != "":
+        user.blue = blue
+
+    if green != "":
+        user.green = green
+
+    if yellow != "":
+        user.yellow = yellow
+
     db.session.commit()
 
-    response = car_schema.dump(car)
-    return jsonify(response)
+    return jsonify({
+        "red": user.red,
+        "blue": user.blue,
+        "green": user.green,
+        "yellow": user.yellow
+    })
 
-                                                                                #retrieve all contacts route
 
-@api.route('/cars', methods = ['GET'])
+                                                                # set API key route
+
+@graf.route('/APIkey', methods = ["PUT"])
 @token_required
-def list_all_cars(current_user_token):
-    a_user = current_user_token.token
-    cars = Car.query.filter_by(user_token = a_user).all()
-    response = cars_schema.dump(cars)
-    return jsonify(response)
+def set_APIkey(current_user_token):
 
-                                                                                #retrieve single contact route by id
+    token = current_user_token.token
+    APIkey = request.json["APIkey"]
+    
+    user = User.query.filter_by(token = token).first()
 
-@api.route('/cars/<id>', methods = ['GET'])
-@token_required
-def get_single_car(current_user_token,id):
-    car = car.query.get(id) 
-    response = car_schema.dump(car)
-    return response
-
-                                                                                # update single contact by id
-
-@api.route('/cars/<id>', methods = ['POST','PUT'])
-@token_required
-def update_car_info(current_user_token,id):
-    car = car.query.get(id) 
-    car.make = request.json['make']
-    car.model = request.json['model']
-    car.year = request.json['year']
-    car.mileage = request.json['mileage']
-    car.user_token = current_user_token.token
+    user.APIkey = APIkey
 
     db.session.commit()
-    response = car_schema.dump(car)
-    return jsonify(response)
 
-                                                                                # delete single contact by id
-
-@api.route('/cars/<id>', methods = ['DELETE'])
-@token_required
-def delete_car(current_user_token, id):
-    car = Car.query.get(id)
-    db.session.delete(car)
-    db.session.commit()
-    response = car_schema.dump(car)
-    return jsonify(response)
+    return jsonify({
+        "APIkey": user.APIkey
+    })
