@@ -1,5 +1,5 @@
 from flask import Flask
-from Config import config
+from config import config
 from app.authentication.routes import auth
 from app.api.routes import graf
 
