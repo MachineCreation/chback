@@ -10,7 +10,7 @@ from flask_cors import CORS
 from helpers import JSONEncoder
 
 app = Flask(__name__)
-CORS(app, allow_headers= "*")
+CORS(app, allow_headers= "x-access-token, content-type")
 
 app.register_blueprint(auth)
 app.register_blueprint(graf)
