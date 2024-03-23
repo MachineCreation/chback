@@ -61,3 +61,24 @@ def set_APIkey(current_user_token):
     return jsonify({
         "APIkey": user.APIkey
     })
+
+
+                                                                # set time zone
+
+
+@graf.route('/Timezone', methods = ["PUT"])
+@token_required
+def set_Timezone(current_user_token):
+
+    token = current_user_token.token
+    time_zone = request.json['time_zone']
+    
+    user = User.query.filter_by(token = token).first()
+
+    user.time_zone = time_zone
+
+    db.session.commit()
+
+    return jsonify({
+        "time_zone": user.time_zone
+    })

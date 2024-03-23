@@ -39,4 +39,5 @@ class User(db.Model, UserMixin):
     blue = db.Column(db.String(50), nullable = True, default = 'LTC')
     green = db.Column(db.String(50), nullable = True, default = 'ETH')
     yellow = db.Column(db.String(50), nullable = True, default = 'XTZ')
+    time_zone = db.Column(db.String(100), nullable = True, default = '')
     token =db.Column(db.String(250), nullable = True, unique = True, default = set_token(24))

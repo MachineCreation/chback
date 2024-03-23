@@ -82,7 +82,8 @@ def current_user(current_user_token):
           "red": user.red,
           "blue": user.blue,
           "green": user.green,
-          "yellow": user.yellow
+          "yellow": user.yellow,
+          "time_zone": user.time_zone
 
     })
 
