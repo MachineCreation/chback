@@ -50,11 +50,11 @@ def set_graph(current_user_token):
 def set_APIkey(current_user_token):
 
     token = current_user_token.token
-    APIkey = request.json(APIkey)
+    API_key = request.json['APIkey']
     
     user = User.query.filter_by(token = token).first()
 
-    user.APIkey = APIkey
+    user.APIkey = API_key
 
     db.session.commit()
 
