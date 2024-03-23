@@ -47,10 +47,10 @@ def signin():
     
     try:
         if request.method == 'POST':
-            email = request.json["email"]
+            user_name = request.json["user_name"]
             password = request.json["password"]
 
-            logged_user = User.query.filter(User.email == email).first()
+            logged_user = User.query.filter(User.user_name == user_name).first()
             if logged_user and check_password_hash(logged_user.password, password):
                 login_user(logged_user)
 
@@ -58,7 +58,7 @@ def signin():
                     "token": logged_user.token
                 })
             else:
-                return jsonify({"Error": "Unauthorized, wrong user email or Password"}), 401
+                return jsonify({"Error": "Unauthorized, wrong user user_name or Password"}), 401
     except:
         raise Exception('Invalid Form Data: Please Check your Form')
     
@@ -82,9 +82,7 @@ def current_user(current_user_token):
           "red": user.red,
           "blue": user.blue,
           "green": user.green,
-          "yellow": user.yellow,
-          "time_zone": user.time_zone
-
+          "yellow": user.yellow
     })
 
     
