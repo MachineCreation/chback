@@ -20,17 +20,13 @@ def load_user(user_id):
 
                                                                                 # create class for generating user information and storing it in our DB(using SQLAlchemy)
 
-def set_token(length):
-        return secrets.token_hex(length)
 
-def get_uuid():
-    return uuid4().hex
 
                                                                 # user signup
                                                                 
 class User(db.Model, UserMixin):
     __tablename__ = 'Users'
-    id = db.Column(db.String(32), primary_key = True, unique = True, default = get_uuid)
+    id = db.Column(db.String(32), primary_key = True, unique = True)
     email = db.Column(db.String(345), unique = True, nullable = False)
     password = db.Column(db.String(255), nullable = False)
     user_name = db.Column(db.String(32), nullable = False, unique = True)
@@ -40,4 +36,23 @@ class User(db.Model, UserMixin):
     green = db.Column(db.String(50), nullable = True, default = 'ETH')
     yellow = db.Column(db.String(50), nullable = True, default = 'XTZ')
     time_zone = db.Column(db.String(100), nullable = True, default = '')
-    token =db.Column(db.String(250), nullable = True, unique = True, default = set_token(24))
+    token =db.Column(db.String(250), unique = True, default = '')
+
+    def __init__(self, email, user_name, APIkey, red, blue, green, yellow, time_zone, password = '', token = ''):
+        self.id = self.set_id()
+        self.email = email
+        self.password = password
+        self.user_name = user_name
+        self.APIkey = APIkey
+        self.red = red
+        self.blue = blue
+        self.green = green
+        self.yellow = yellow
+        self.time_zone = time_zone
+        self.token = self.set_token(24)
+
+    def set_token(self, length):
+        return secrets.token_hex(length)
+
+    def set_id(self):
+        return uuid4().hex
