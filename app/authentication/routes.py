@@ -87,8 +87,8 @@ def current_user(current_user_token):
 
 @auth.route('/delete', methods = ['DELETE'])
 @token_required
-def delete_contact(current_user_token):
-    user = User.query.get(current_user_token)
+def delete_contact(current_user_token, id):
+    user = User.query.get(id)
     db.session.delete(user)
     db.session.commit()
     return jsonify({ "user": "deleted"})
