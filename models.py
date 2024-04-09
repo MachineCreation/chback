@@ -31,14 +31,14 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255), nullable = False)
     user_name = db.Column(db.String(32), nullable = False, unique = True)
     APIkey = db.Column(db.String(255), nullable = True, default = '')
-    red = db.Column(db.String(50), nullable = True, default = 'BTC')
-    blue = db.Column(db.String(50), nullable = True, default = 'LTC')
-    green = db.Column(db.String(50), nullable = True, default = 'ETH')
-    yellow = db.Column(db.String(50), nullable = True, default = 'XTZ')
+    red = db.Column(db.String(50), nullable = True, default = '')
+    blue = db.Column(db.String(50), nullable = True, default = '')
+    green = db.Column(db.String(50), nullable = True, default = '')
+    yellow = db.Column(db.String(50), nullable = True, default = '')
     time_zone = db.Column(db.String(100), nullable = True, default = '')
     token =db.Column(db.String(250), unique = True, default = '')
 
-    def __init__(self, email, user_name, APIkey = '', red = '', blue = '', green = '', yellow = '', time_zone = '', password = '', token = ''):
+    def __init__(self, email, user_name, APIkey = '', red = 'BTC', blue = 'LTC', green = 'ETH', yellow = 'XTZ', time_zone = '', password = '', token = ''):
         self.id = self.set_id()
         self.email = email
         self.password = password

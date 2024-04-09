@@ -85,7 +85,13 @@ def current_user(current_user_token):
           "yellow": user.yellow
     })
 
-    
+@auth.route('/delete', methods = ['DELETE'])
+@token_required
+def delete_contact(current_user_token):
+    user = User.query.get(current_user_token)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({ "user": "deleted"})
 
                                                                                 #Logout
 
