@@ -85,10 +85,13 @@ def current_user(current_user_token):
           "yellow": user.yellow
     })
 
-@auth.route('/delete/<id>', methods = ['DELETE'])
+@auth.route('/delete', methods = ['DELETE'])
 @token_required
-def delete_contact(current_user_token, id):
-    user = User.query.get(id)
+def delete_contact(current_user_token):
+    user_token = current_user_token.token
+
+    
+    user = User.query.filter_by(token = user_token).first()
     db.session.delete(user)
     db.session.commit()
     return jsonify({ "user": "deleted"})
