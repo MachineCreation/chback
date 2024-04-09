@@ -85,7 +85,7 @@ def current_user(current_user_token):
           "yellow": user.yellow
     })
 
-@auth.route('/delete', methods = ['DELETE'])
+@auth.route('/delete/<id>', methods = ['DELETE'])
 @token_required
 def delete_contact(current_user_token, id):
     user = User.query.get(id)
