@@ -38,7 +38,7 @@ class User(db.Model, UserMixin):
     time_zone = db.Column(db.String(100), nullable = True, default = '')
     token =db.Column(db.String(250), unique = True, default = '')
 
-    def __init__(self, email, user_name, APIkey, red, blue, green, yellow, time_zone, password = '', token = ''):
+    def __init__(self, email, user_name, APIkey = '', red = '', blue = '', green = '', yellow = '', time_zone = '', password = '', token = ''):
         self.id = self.set_id()
         self.email = email
         self.password = password
