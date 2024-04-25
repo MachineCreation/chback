@@ -12,7 +12,7 @@ graf = Blueprint('graf', __name__,)
 
 @graf.route("/red", methods = ["PUT"])
 @token_required
-def set_graph(current_user_token):
+def set_red_graph(current_user_token):
 
     token = current_user_token.token
     red = request.json["red"]
@@ -32,7 +32,7 @@ def set_graph(current_user_token):
 
 @graf.route("/blue", methods = ["PUT"])
 @token_required
-def set_graph(current_user_token):
+def set_blue_graph(current_user_token):
 
     token = current_user_token.token
     blue = request.json["blue"]
@@ -52,7 +52,7 @@ def set_graph(current_user_token):
 
 @graf.route("/green", methods = ["PUT"])
 @token_required
-def set_graph(current_user_token):
+def set_green_graph(current_user_token):
 
     token = current_user_token.token
     blue = request.json["green"]
@@ -72,7 +72,7 @@ def set_graph(current_user_token):
 
 @graf.route("/yellow", methods = ["PUT"])
 @token_required
-def set_graph(current_user_token):
+def set_yellow_graph(current_user_token):
 
     token = current_user_token.token
     blue = request.json["yellow"]
