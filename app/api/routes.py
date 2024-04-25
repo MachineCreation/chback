@@ -7,28 +7,77 @@ from flask import current_app as app
 
 graf = Blueprint('graf', __name__,)
 
-                                                                # set graph route
+                                                                # set graph routes by color
+                                                                # red
 
-@graf.route("/create", methods = ["PUT"])
+@graf.route("/red", methods = ["PUT"])
 @token_required
 def set_graph(current_user_token):
 
     token = current_user_token.token
     red = request.json["red"]
-    blue = request.json["blue"]
-    green = request.json["green"]
-    yellow = request.json["yellow"]
     
     user = User.query.filter_by(token = token).first()
 
     if red != "":
-        user.red = red
+      user.red = red
+
+    db.session.commit()
+
+    return jsonify({
+        "red": user.red,
+    })
+
+                                                                #blue
+
+@graf.route("/blue", methods = ["PUT"])
+@token_required
+def set_graph(current_user_token):
+
+    token = current_user_token.token
+    blue = request.json["blue"]
+    
+    user = User.query.filter_by(token = token).first()
 
     if blue != "":
         user.blue = blue
 
+    db.session.commit()
+
+    return jsonify({
+        "blue": user.blue
+    })
+
+                                                                #green
+
+@graf.route("/green", methods = ["PUT"])
+@token_required
+def set_graph(current_user_token):
+
+    token = current_user_token.token
+    blue = request.json["green"]
+    
+    user = User.query.filter_by(token = token).first()
+
     if green != "":
         user.green = green
+
+    db.session.commit()
+
+    return jsonify({
+        "green": user.green
+    })
+
+                                                                #yellow
+
+@graf.route("/yellow", methods = ["PUT"])
+@token_required
+def set_graph(current_user_token):
+
+    token = current_user_token.token
+    blue = request.json["yellow"]
+    
+    user = User.query.filter_by(token = token).first()
 
     if yellow != "":
         user.yellow = yellow
@@ -36,9 +85,6 @@ def set_graph(current_user_token):
     db.session.commit()
 
     return jsonify({
-        "red": user.red,
-        "blue": user.blue,
-        "green": user.green,
         "yellow": user.yellow
     })
 
