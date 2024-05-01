@@ -55,7 +55,7 @@ def set_blue_graph(current_user_token):
 def set_green_graph(current_user_token):
 
     token = current_user_token.token
-    blue = request.json["green"]
+    green = request.json["green"]
     
     user = User.query.filter_by(token = token).first()
 
@@ -75,7 +75,7 @@ def set_green_graph(current_user_token):
 def set_yellow_graph(current_user_token):
 
     token = current_user_token.token
-    blue = request.json["yellow"]
+    yellow = request.json["yellow"]
     
     user = User.query.filter_by(token = token).first()
 
