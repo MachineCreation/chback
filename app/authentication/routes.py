@@ -1,10 +1,7 @@
-from forms import UserLoginForm
 from models import User, db, check_password_hash, generate_password_hash
-from flask import Blueprint, request, redirect, url_for, jsonify
+from flask import Blueprint, request, jsonify
 from helpers import token_required
-
-# imports for flask login 
-from flask_login import login_user, logout_user, LoginManager, current_user, login_required
+from flask_login import login_user, logout_user
 
 auth = Blueprint('auth', __name__)
 

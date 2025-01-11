@@ -1,8 +1,6 @@
-from flask import Flask, request, Blueprint, jsonify, session
+from flask import Flask, request, Blueprint, jsonify
 from models import db, User
 from helpers import token_required
-
-from flask import current_app as app
 
 
 graf = Blueprint('graf', __name__,)
