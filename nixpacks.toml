@@ -3,7 +3,7 @@ nixpkgs = ["python311", "pip"]
 
 [phases.build]
 cmds = [
-    "echo 'Python version:' && python3 --version",
+    "nix-env -iA nixpkgs.python311 nixpkgs.pip",
     "pip install --upgrade pip",
     "pip install -r requirements.txt"
     ]
