@@ -10,7 +10,7 @@ from flask_cors import CORS
 from helpers import JSONEncoder
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources='http://localhost:5173')
 
 app.register_blueprint(auth)
 app.register_blueprint(graf)
